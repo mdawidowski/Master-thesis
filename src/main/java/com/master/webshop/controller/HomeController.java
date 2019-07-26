@@ -1,0 +1,18 @@
+package com.master.webshop.controller;
+
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Component
+@Controller
+public class HomeController {
+
+//    creating mapping
+
+    @GetMapping("/")
+    public String getHome(Model theModel){
+        return "home";
+    }
+}
