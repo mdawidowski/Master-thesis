@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" layout:fragment="content">
+            <h1>Welcome to the WebShop</h1>
+            <div class="container">
+                <div class="jumbotron d-flex justify-content-center align-items-center ">
+                    Log in or register and start making some awesome shopping!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

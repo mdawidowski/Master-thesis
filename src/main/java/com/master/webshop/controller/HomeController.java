@@ -13,6 +13,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHome(Model theModel){
-        return "home";
+        return "index";
     }
 }
