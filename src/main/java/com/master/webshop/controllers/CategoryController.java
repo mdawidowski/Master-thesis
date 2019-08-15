@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CategoryController {
 
-    @GetMapping("/categories")
+    @GetMapping("/category")
     public String getCategories(Model theModel){
         return "categories";
     }

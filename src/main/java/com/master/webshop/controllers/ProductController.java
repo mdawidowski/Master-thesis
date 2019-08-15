@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductController {
 
-    @GetMapping("/products")
+    @GetMapping("/product")
     public String getProducts(Model theModel){
         return "products";
     }
