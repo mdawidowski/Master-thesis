@@ -1,4 +1,4 @@
-package com.master.webshop.controller;
+package com.master.webshop.controllers;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Component
 @Controller
-public class HomeController {
+public class ProductController {
 
-//    creating mapping
-
-    @GetMapping("/")
-    public String getHome(Model theModel){
-        return "index";
+    @GetMapping("/products")
+    public String getProducts(Model theModel){
+        return "products";
     }
 }

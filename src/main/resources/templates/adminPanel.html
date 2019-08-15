@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Admin panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" layout:fragment="content">
+            Admin panel
+            <div class="jumbotron">
+                <a href="/products">Products</a>
+                <a href="/categories">Categories</a>
+                <a href="/invoices">Invoices</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
