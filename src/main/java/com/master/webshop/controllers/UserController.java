@@ -40,10 +40,10 @@ public class UserController {
     @RequestMapping(value= {"/signup"}, method=RequestMethod.POST)
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByUsername(user.getUsername());
 
         if(userExists != null) {
-            bindingResult.rejectValue("email", "error.user", "This email already exists!");
+            bindingResult.rejectValue("username", "error.user", "This username already exists!");
         }
         if(bindingResult.hasErrors()) {
             model.setViewName("user/signup");
@@ -62,9 +62,9 @@ public class UserController {
         ModelAndView model;
         model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.findUserByUsername(auth.getName());
 
-        model.addObject("userName", user.getFirstname() + " " + user.getLastname());
+        model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
         return model;
     }
