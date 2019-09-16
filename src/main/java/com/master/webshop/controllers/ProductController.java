@@ -1,6 +1,8 @@
 package com.master.webshop.controllers;
 
+import com.master.webshop.model.Category;
 import com.master.webshop.model.Product;
+import com.master.webshop.services.CategoryService;
 import com.master.webshop.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +17,11 @@ public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(ProductService theProductService) {
+    private CategoryService categoryService;
+
+    public ProductController(ProductService theProductService, CategoryService theCategoryService) {
         productService = theProductService;
+        categoryService = theCategoryService;
     }
 
     // add mapping for "/list"
@@ -33,12 +38,19 @@ public class ProductController {
         return "products/list-products";
     }
 
+    @RequestMapping("product/{id}")
+    public String showProduct(@PathVariable Integer id, Model model){
+        model.addAttribute("product", productService.findById(id));
+        return "products/product_show";
+    }
+
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
 
         // create model attribute to bind form data
         Product theProduct= new Product();
-
+        List<Category> categoryList = categoryService.findAll();
+        theModel.addAttribute("categoryList", categoryList);
         theModel.addAttribute("product", theProduct);
 
         return "products/product-form";

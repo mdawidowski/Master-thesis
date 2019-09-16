@@ -36,12 +36,11 @@
 
         <tbody>
         <tr th:each="tempProduct : ${products}">
-
-            <td th:text="${tempProduct.name}" />
+            <a th:href="@{/products/product/{id}(id=${tempProduct.id})}">
+            <td th:text="${tempProduct.name}" /></a>
             <td th:text="${tempProduct.price}" />
             <td th:text="${tempProduct.unit}" />
             <td th:text="${tempProduct.category.getName()}" />
-
         </tr>
         </tbody>
     </table>
