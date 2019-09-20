@@ -1,5 +1,6 @@
 package com.master.webshop.services;
 
+import com.master.webshop.model.Category;
 import com.master.webshop.model.Product;
 import com.master.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +25,24 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product findById(int theId) {
-        Optional<Product> result = productRepository.findById(theId);
+    public Product findById(Long id) {
 
-        Product theProduct= null;
+        Optional<Product> result = productRepository.findById(id);
+
+        Product theProduct = null;
 
         if (result.isPresent()) {
             theProduct = result.get();
         }
         else {
-            // we didn't find the product
-            throw new RuntimeException("Did not find product id - " + theId);
+            // we didn't find the category
+            throw new RuntimeException("Did not find category id - " + id);
         }
 
         return theProduct;
     }
+
+
 
     @Override
     public void save(Product theProduct) {
@@ -46,7 +50,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteById(int theId) {
+    public void deleteById(Long theId) {
         productRepository.deleteById(theId);
     }
 }

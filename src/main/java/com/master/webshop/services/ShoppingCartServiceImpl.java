@@ -1,0 +1,38 @@
+package com.master.webshop.services;
+
+import com.master.webshop.model.CartItem;
+import com.master.webshop.model.ShoppingCart;
+import com.master.webshop.repositories.ShoppingCartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Service
+public class ShoppingCartServiceImpl implements ShoppingCartService{
+	
+	@Autowired
+	private CartItemService cartItemService;
+	
+	@Autowired
+	private ShoppingCartRepository shoppingCartRepository;
+	
+	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
+		BigDecimal cartTotal = new BigDecimal(0);
+		
+		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
+		
+		for (CartItem cartItem : cartItemList) {
+				cartItemService.updateCartItem(cartItem);
+				cartTotal = cartTotal.add(cartItem.getSubtotal());
+		}
+		
+		shoppingCart.setGrandTotal(cartTotal);
+		
+		shoppingCartRepository.save(shoppingCart);
+		
+		return shoppingCart;
+	}
+
+}

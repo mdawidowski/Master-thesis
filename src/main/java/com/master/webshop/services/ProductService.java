@@ -3,15 +3,16 @@ package com.master.webshop.services;
 import com.master.webshop.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
-    public List<Product> findAll();
+    List<Product> findAll();
 
-    public Product findById(int theId);
+    Product findById(Long id);
 
-    public void save(Product theProduct);
+    void save(Product theProduct);
 
-    public void deleteById(int theId);
+    void deleteById(Long theId);
 
 }

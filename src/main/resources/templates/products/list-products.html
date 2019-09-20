@@ -31,16 +31,22 @@
             <th>Price</th>
             <th>Unit</th>
             <th>Category</th>
+            <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="tempProduct : ${products}">
-            <a th:href="@{/products/product/{id}(id=${tempProduct.id})}">
-            <td th:text="${tempProduct.name}" /></a>
+            <td th:text="${tempProduct.name}" />
             <td th:text="${tempProduct.price}" />
             <td th:text="${tempProduct.unit}" />
             <td th:text="${tempProduct.category.getName()}" />
+            <td>
+                <a th:href="@{/products/product/__${tempProduct.id}__}"
+                   class="btn btn-dark btn-sm mb-3">
+                    Show
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

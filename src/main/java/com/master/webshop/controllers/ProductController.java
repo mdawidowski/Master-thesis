@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @RequestMapping("product/{id}")
-    public String showProduct(@PathVariable Integer id, Model model){
+    public String showProduct(@PathVariable Long id, Model model){
         model.addAttribute("product", productService.findById(id));
         return "products/product_show";
     }
@@ -56,19 +56,19 @@ public class ProductController {
         return "products/product-form";
     }
 
-    @PostMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("ProductId") int theId,
-                                    Model theModel) {
-
-        // get the product from the service
-        Product theProduct = productService.findById(theId);
-
-        // set product as a model attribute to pre-populate the form
-        theModel.addAttribute("product", theProduct);
-
-        // send over to our form
-        return "products/product-form";
-    }
+//    @PostMapping("/showFormForUpdate")
+//    public String showFormForUpdate(@RequestParam("ProductId") Long theId,
+//                                    Model theModel) {
+//
+//        // get the product from the service
+//        Product theProduct = productService.findById(theId);
+//
+//        // set product as a model attribute to pre-populate the form
+//        theModel.addAttribute("product", theProduct);
+//
+//        // send over to our form
+//        return "products/product-form";
+//    }
 
 
     @PostMapping("/save")
@@ -83,7 +83,7 @@ public class ProductController {
 
 
     @PostMapping("/delete")
-    public String delete(@RequestParam("productId") int theId) {
+    public String delete(@RequestParam("productId") Long theId) {
 
         // delete the product
         productService.deleteById(theId);
