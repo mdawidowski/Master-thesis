@@ -41,7 +41,7 @@ public class ProductController {
     @RequestMapping("product/{id}")
     public String showProduct(@PathVariable Long id, Model model){
         model.addAttribute("product", productService.findById(id));
-        return "products/product_show";
+        return "products/product-show";
     }
 
     @GetMapping("/showFormForAdd")

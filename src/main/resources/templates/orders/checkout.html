@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/layout}">
+<head>
+	<title>Checkout</title>
+</head>
+
+<body>
+	<div class="col" layout:fragment="content">
+
+		<div class="row" style="margin-top: 10px;">
+			<form th:action="@{/checkout}" method="post">
+
+				<!-- Left Panel -->
+				<div class="col-xs-4">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<button type="submit" class="btn btn-warning btn-block">Place
+								your order</button>
+							<p style="font-size: smaller;">
+								By placing your order, you agree to <a href="#">privacy</a>
+								notice and <a href="#">conditions</a> of use.
+							</p>
+							<hr />
+							<h3>Order Summary</h3>
+							<div class="row">
+								<div class="col-xs-7 text-left">Total amount:</div>
+								<div class="col-xs-5 text-right">
+									$<span th:text="${shoppingCart.grandTotal}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Checkout Info -->
+				<div class="col-xs-8">
+					<div th:if="${missingRequiredField}">
+						<h5 class="alert alert-warning">There are some fields
+							missing. Field with * is required.</h5>
+					</div>
+
+					<div class="panel-group" id="accordion">
+
+						<!-- 3. Review Items  -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#reviewItems"> Review Items </a>
+								</h4>
+							</div>
+							<div id="reviewItems" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-xs-8">
+											<h4>Products</h4>
+										</div>
+										<div class="col-xs-2">
+											<h4>Price</h4>
+										</div>
+										<div class="col-xs-2">
+											<h4>Qty</h4>
+										</div>
+									</div>
+
+									<!-- display products in cart -->
+									<div class="row" th:each="cartItem : ${cartItemList}">
+											<hr />
+											<div class="col-xs-2">
+												<a th:href="@{/productDetail(id=${cartItem.product.id})}"></a>
+											</div>
+											<div class="col-xs-6">
+												<div style="margin-left: 50px;">
+													<a th:href="@{/productDetail?id=}+${cartItem.product.id}"><h4
+															th:text="${cartItem.product.name}"></h4></a>
+													<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">delete</a>
+												</div>
+											</div>
+
+											<div class="col-xs-2">
+												<h5 style="color: #db3208; font-size: large;">
+													$<span th:text="${cartItem.product.price}"></span>
+												</h5>
+											</div>
+
+											<div class="col-xs-2">
+												<h5 style="font-size: large;" th:text="${cartItem.qty}"></h5>
+											</div>
+										
+									</div>
+
+									<hr />
+									<h4 class="col-xs-12 text-right">
+										<strong style="font-size: large;">Order Total (<span
+											th:text="${#lists.size(cartItemList)}"></span> items):
+										</strong> <span style="color: #db3208; font-szie: large;">$<span
+											th:text="${shoppingCart.grandTotal}"></span></span>
+									</h4>
+									<br />
+									<br />
+									<button type="submit" class="btn btn-warning btn-block">Place
+										your order</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end of container -->
+
+	</div>
+</body>
+</html>

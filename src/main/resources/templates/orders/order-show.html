@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Order Page</title>
+</head>
+<body>
+<div class="col" layout:fragment="content">
+    <div class="container">
+        <h2>Order Details</h2>
+        <div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><b>Order number:</b></label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${order.id}">Name</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><b>Date:</b></label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${order.orderDate}">Name</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><b>Price:</b></label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${order.orderTotal} + ' $'">Price</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><b>Items:</b></label>
+                    <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Product name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div th:each="orderList : ${order.cartItemList}">
+                            <tr>
+                                <td><a th:href="@{/products/product/__${orderList.product.id}__}"><span th:text="${orderList.product.name}"> </span></a> </td>
+                                <td><span th:text="${orderList.product.price}"> </span></td>
+                            </tr>
+                         </div>
+                    </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

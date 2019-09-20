@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/layout}">
+<head>
+	<title>Order</title>
+</head>
+
+<body>
+	<div class="col" layout:fragment="content">
+
+	<div class="container">
+		<div class="row" style="margin-top: 10px;">
+			<div class="col-xs-12">
+				<div class="alert alert-success">
+					<h3>
+						<i class="fa fa-check" aria-hidden="true"
+							style="color: limegreen;"></i> Thank you for your order.
+					</h3>
+
+				</div>
+
+				<h3>List of Items</h3>
+				<div class="row" th:each="cartItem : ${cartItemList}">
+					<hr />
+					<div class="col-xs-2"></div>
+					<div class="col-xs-2">
+
+						<a th:href="@{/productDetail(id=${cartItem.product.id})}"></a>
+					</div>
+					<div class="col-xs-6">
+						<div style="margin-left: 50px;">
+							<a th:href="@{/productDetail?id=}+${cartItem.product.id}"><h4
+									th:text="${cartItem.product.name}"></h4></a>
+						</div>
+					</div>
+
+					<div class="col-xs-2">
+						<h5 style="color: #db3208; font-size: large;">
+							$<span th:text="${cartItem.product.price}"></span>
+						</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- end of container -->
+</body>
+</html>

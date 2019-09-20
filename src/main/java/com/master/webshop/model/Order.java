@@ -13,9 +13,6 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Date orderDate;
-	private Date shippingDate;
-	private String shippingMethod;
-	private String orderStatus;
 	private BigDecimal orderTotal;
 	
 	@OneToMany(mappedBy = "order", cascade= CascadeType.ALL )
@@ -38,30 +35,6 @@ public class Order {
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
-	}
-
-	public Date getShippingDate() {
-		return shippingDate;
-	}
-
-	public void setShippingDate(Date shippingDate) {
-		this.shippingDate = shippingDate;
-	}
-
-	public String getShippingMethod() {
-		return shippingMethod;
-	}
-
-	public void setShippingMethod(String shippingMethod) {
-		this.shippingMethod = shippingMethod;
-	}
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
 	}
 
 	public BigDecimal getOrderTotal() {
@@ -87,6 +60,5 @@ public class Order {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+
 }

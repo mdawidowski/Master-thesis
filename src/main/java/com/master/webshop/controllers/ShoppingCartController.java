@@ -46,7 +46,7 @@ public class ShoppingCartController {
         model.addAttribute("cartItemList", cartItemList);
         model.addAttribute("shoppingCart", shoppingCart);
 
-        return "shoppingCart";
+        return "orders/shoppingCart";
     }
 
     @RequestMapping("/addItem")
