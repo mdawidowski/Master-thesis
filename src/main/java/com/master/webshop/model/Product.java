@@ -20,6 +20,8 @@ public class Product {
 
     private String unit;
 
+    private String imageURL;
+
     @Column(name = "quantity", nullable = false)
     @Min(value = 0, message = "*Quantity has to be non negative number")
     private Integer quantity;
@@ -59,6 +61,14 @@ public class Product {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Integer getQuantity() {

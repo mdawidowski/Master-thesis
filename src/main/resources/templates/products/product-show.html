@@ -44,13 +44,13 @@
                     <p class="form-control-static" th:text="${product.category.name}">Category</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-warning" style="color:black;border:1px solid black; padding: 10px 40px 10px 40px;">Add to Cart</button>
-            <!--<div class="form-group">-->
-                <!--<label class="col-sm-2 control-label">Image Url:</label>-->
-                <!--<div class="col-sm-10">-->
-                    <!--<p class="form-control-static" th:text="${product.imageUrl}">url....</p>-->
-                <!--</div>-->
-            <!--</div>-->
+            <button type="submit" class="btn btn-primary" style="color:black;border:1px solid black; padding: 10px 40px 10px 40px;">Add to Cart</button>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    <img th:src="${product.imageURL}">
+                </div>
+            </div>
         </form>
     </div>
 </div>

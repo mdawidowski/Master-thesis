@@ -56,19 +56,20 @@ public class ProductController {
         return "products/product-form";
     }
 
-//    @PostMapping("/showFormForUpdate")
-//    public String showFormForUpdate(@RequestParam("ProductId") Long theId,
-//                                    Model theModel) {
-//
-//        // get the product from the service
-//        Product theProduct = productService.findById(theId);
-//
-//        // set product as a model attribute to pre-populate the form
-//        theModel.addAttribute("product", theProduct);
-//
-//        // send over to our form
-//        return "products/product-form";
-//    }
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable Long id,
+                                    Model theModel) {
+
+        // get the product from the service
+        Product theProduct = productService.findById(id);
+
+        List<Category> categoryList = categoryService.findAll();
+        theModel.addAttribute("categoryList", categoryList);
+        theModel.addAttribute("product", theProduct);
+
+        // send over to our form
+        return "products/product-form";
+    }
 
 
     @PostMapping("/save")

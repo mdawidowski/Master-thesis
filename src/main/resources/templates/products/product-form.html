@@ -37,14 +37,17 @@
         <input type="text" th:field="*{quantity}"
                class="form-control mb-4 col-4" placeholder="Quantity">
 
+        <input type="text" th:field="*{imageURL}"
+               class="form-control mb-4 col-4" placeholder="Image URL">
+
         <select th:field="*{category}"
                 required="required" class="form-control">
 
             <option th:each="category: ${categoryList}" th:value="${category.id}"
                     th:text="${category.name}"></option>
         </select>
-
-        <button type="submit" class="btn btn-info col-2">Save</button>
+        <br />
+        <button type="submit" class="btn btn-dark col-2">Save</button>
 
     </form>
 
