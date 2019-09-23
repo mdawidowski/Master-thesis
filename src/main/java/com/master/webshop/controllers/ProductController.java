@@ -30,7 +30,7 @@ public class ProductController {
     public String listProducts(Model theModel) {
 
         // get products from db
-        List<Product> theProducts = productService.findAll();
+        List<Product> theProducts = productService.findAllByOrderByCategory();
 
         // add to the spring model
         theModel.addAttribute("products", theProducts);

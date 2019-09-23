@@ -41,8 +41,6 @@ public class ProductServiceImpl implements ProductService{
         return theProduct;
     }
 
-
-
     @Override
     public void save(Product theProduct) {
         productRepository.save(theProduct);
@@ -52,4 +50,6 @@ public class ProductServiceImpl implements ProductService{
     public void deleteById(Long theId) {
         productRepository.deleteById(theId);
     }
+
+    public List<Product> findAllByOrderByCategory(){ return productRepository.findAllByOrderByCategory(); }
 }

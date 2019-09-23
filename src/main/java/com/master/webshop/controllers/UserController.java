@@ -64,15 +64,18 @@ public class UserController {
     }
 
     @RequestMapping(value= {"/home/index"}, method=RequestMethod.GET)
-    public ModelAndView home() throws SQLException {
+    public ModelAndView home() {
         ModelAndView model;
         model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUsername(auth.getName());
+
+        // create users shopping cart if he doesn't have one
         final String CREATE_NEW_SHOPPING_CART = "INSERT IGNORE INTO `shopping_cart`\n" +
                 "SET `grand_total` = 0,\n" +
                 "`user_id` = ?;\n";
         jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId());
+
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
         return model;

@@ -15,4 +15,5 @@ public interface ProductService {
 
     void deleteById(Long theId);
 
+    List<Product> findAllByOrderByCategory();
 }

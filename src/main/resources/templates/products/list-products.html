@@ -16,13 +16,13 @@
 <body>
 <div class="col" layout:fragment="content">
     <div class="container">
+    <h4>Total products: <b th:text="${products.size()}"></b></h4>
 
-    <!-- Add a button -->
-    <a th:href="@{/products/showFormForAdd}"
+        <!-- Add a button -->
+        <a th:href="@{/products/showFormForAdd}"
        class="btn btn-primary btn-sm mb-3">
         Add Product
     </a>
-
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
