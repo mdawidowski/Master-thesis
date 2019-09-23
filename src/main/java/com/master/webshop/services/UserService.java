@@ -4,8 +4,8 @@ import com.master.webshop.model.User;
 
 public interface UserService {
 
-    public User findUserByUsername(String username);
+    User findUserByUsername(String username);
 
-    public void saveUser(User user);
+    void saveUser(User user);
 
 }

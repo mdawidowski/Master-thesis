@@ -6,6 +6,9 @@ import com.master.webshop.services.OrderService;
 import com.master.webshop.services.ShoppingCartService;
 import com.master.webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CheckoutController {
@@ -87,10 +91,18 @@ public class CheckoutController {
 
 	@GetMapping("orders/list")
 	public String listProducts(Model theModel) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByUsername(auth.getName());
 
-		// get products from db
-		List<Order> theOrders= orderService.findAll();
-
+		List<Order> orderList = orderService.findAll();
+		// get orders from db
+		List<Order> theOrders =
+				//Create a Stream from the orderList
+				orderList.stream().
+						//filter the element to select only those with user_id
+								filter(p -> p.getUser().getId() == user.getId()).
+						//put those filtered elements into a new List.
+								collect(Collectors.toList());
 		// add to the spring model
 		theModel.addAttribute("orders", theOrders);
 

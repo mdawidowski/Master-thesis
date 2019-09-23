@@ -1,6 +1,5 @@
 package com.master.webshop.services;
 
-import com.master.webshop.model.Category;
 import com.master.webshop.model.Product;
 import com.master.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,6 +3,7 @@ package com.master.webshop.controllers;
 import com.master.webshop.model.User;
 import com.master.webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
     public ModelAndView login() {
@@ -58,12 +64,15 @@ public class UserController {
     }
 
     @RequestMapping(value= {"/home/index"}, method=RequestMethod.GET)
-    public ModelAndView home() {
+    public ModelAndView home() throws SQLException {
         ModelAndView model;
         model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUsername(auth.getName());
-
+        final String CREATE_NEW_SHOPPING_CART = "INSERT IGNORE INTO `shopping_cart`\n" +
+                "SET `grand_total` = 0,\n" +
+                "`user_id` = ?;\n";
+        jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId());
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
         return model;
