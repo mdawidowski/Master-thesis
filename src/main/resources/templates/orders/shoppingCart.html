@@ -35,14 +35,15 @@
 
 					<br /> <br />
 
-					<!--**************** display products in cart ****************-->
+				<!--**************** display products in cart ****************-->
 				<div class="container">
 					<div class="row" th:each="cartItem : ${cartItemList}">
 						<form th:action="@{/shoppingCart/updateCartItem}" method="post">
 							<div class="col-xs-6">
+								<img th:src="${cartItem.product.imageURL}">
 								<div style="margin-left:50px;">
 								<a th:href="@{/products/product/}+${cartItem.product.id}"><h4 th:text="${cartItem.product.name}"></h4></a>
-								<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">delete</a>
+								<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="btn btn-dark">Delete</a>
 								</div>
 							</div>
 
@@ -56,9 +57,10 @@
 								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
 									th:id="${cartItem.id}" th:name="qty"  class="form-control cartItemQty" th:value="${cartItem.qty}" />
 								<button style="display: none;"
-									th:id="'update-item-'+${cartItem.id}" type="submit"
-									class="btn btn-warning btn-xs">Update</button>
+										th:id="'update-item-'+${cartItem.id}" type="submit"
+										class="btn btn-warning btn-xs">Update</button>
 							</div>
+
 						</form>
 					</div>
 				</div>

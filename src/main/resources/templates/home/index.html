@@ -12,7 +12,11 @@
     <div class="row">
         <div class="col" layout:fragment="content">
             <h3>Nice to see you <span th:utext="${username}"></span>!</h3>
-
+            <div class="jumbotron">
+                <h4>Great offers!</h4>
+                <tr th:each="tempProduct : ${products}">
+                    <a th:href="@{/products/product/__${tempProduct.id}__}"><img th:src="${tempProduct.imageURL}" width="150" /></a>
+                </tr>
             </div>
         </div>
     </div>

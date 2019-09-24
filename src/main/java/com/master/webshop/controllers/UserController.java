@@ -1,6 +1,9 @@
 package com.master.webshop.controllers;
 
+import com.master.webshop.model.Product;
 import com.master.webshop.model.User;
+import com.master.webshop.repositories.ProductRepository;
+import com.master.webshop.services.ProductService;
 import com.master.webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Controller
 public class UserController {
@@ -23,7 +29,12 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    ProductService productService;
+
+    @Autowired
     JdbcTemplate jdbcTemplate;
+
+    List<Product> randomProductsList = new ArrayList<Product>() {};
 
     @RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
     public ModelAndView login() {
@@ -69,13 +80,16 @@ public class UserController {
         model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUsername(auth.getName());
+        List<Product> theProducts = productService.findAllByOrderByCategory();
+
 
         // create users shopping cart if he doesn't have one
         final String CREATE_NEW_SHOPPING_CART = "INSERT IGNORE INTO `shopping_cart`\n" +
                 "SET `grand_total` = 0,\n" +
                 "`user_id` = ?;\n";
         jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId());
-
+        randomProductsList = randomListOfProducts(theProducts);
+        model.addObject("products", randomProductsList);
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
         return model;
@@ -86,5 +100,15 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         model.setViewName("errors/access_denied");
         return model;
+    }
+
+    List<Product> randomListOfProducts(List<Product> productList){
+        Random generator = new Random();
+        randomProductsList.clear();
+
+        for (int i = 0; i < 5; i++) {
+            randomProductsList.add(productList.get(generator.nextInt(productList.size())));
+        }
+        return randomProductsList;
     }
 }
