@@ -22,6 +22,7 @@
             <tr>
                 <th>Order number</th>
                 <th>Total amount</th>
+                <th>User ID</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -30,6 +31,7 @@
             <tr th:each="tempOrder : ${orders}">
                 <td th:text="${tempOrder.id}" />
                 <td th:text="${tempOrder.orderTotal}" />
+                <td th:text="${tempOrder.user.id}" />
                 <td>
                     <a th:href="@{/order/__${tempOrder.id}__}"
                        class="btn btn-dark btn-sm mb-3">

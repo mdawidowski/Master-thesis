@@ -105,7 +105,16 @@ public class CheckoutController {
 								collect(Collectors.toList());
 		// add to the spring model
 		theModel.addAttribute("orders", theOrders);
-
 		return "orders/user-orders";
+	}
+
+	@GetMapping("admin/all-orders")
+	public String listAllOrders(Model theModel) {
+		List<Order> orderList = orderService.findAll();
+
+		// add to the spring model
+		theModel.addAttribute("orders", orderList);
+
+		return "orders/all-orders";
 	}
 }
