@@ -69,11 +69,11 @@
 									<div class="row" th:each="cartItem : ${cartItemList}">
 											<hr />
 											<div class="col-xs-2">
-												<a th:href="@{/productDetail(id=${cartItem.product.id})}"></a>
+												<a th:href="@{/producs/product/(id=${cartItem.product.id})}"></a>
 											</div>
 											<div class="col-xs-6">
 												<div style="margin-left: 50px;">
-													<a th:href="@{/productDetail?id=}+${cartItem.product.id}"><h4
+													<a th:href="@{/products/product/}+${cartItem.product.id}"><h4
 															th:text="${cartItem.product.name}"></h4></a>
 													<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}">delete</a>
 												</div>

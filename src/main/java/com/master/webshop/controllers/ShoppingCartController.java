@@ -61,7 +61,7 @@ public class ShoppingCartController {
         CartItem cartItem = cartItemService.addProductToCartItem(product, user, Integer.parseInt(qty));
         model.addAttribute("addProductSuccess", true);
 
-        return "forward:/products/product/"+product.getId();
+        return "forward:/shoppingCart/cart";
     }
 
     @RequestMapping("/updateCartItem")
