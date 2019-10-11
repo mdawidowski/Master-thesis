@@ -89,4 +89,14 @@ public class CartItemServiceImpl implements CartItemService{
 		return cartItemRepository.save(cartItem);
 	}
 
+
+	@Override
+	public List<CartItem> findByProduct(Product product){
+		return cartItemRepository.findByProduct(product);
+	}
+
+	@Override
+	public List<CartItem> findByOrder(Order order) {
+		return cartItemRepository.findByOrder(order);
+	}
 }

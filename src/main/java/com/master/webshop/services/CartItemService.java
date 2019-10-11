@@ -1,10 +1,7 @@
 package com.master.webshop.services;
 
 
-import com.master.webshop.model.CartItem;
-import com.master.webshop.model.Product;
-import com.master.webshop.model.ShoppingCart;
-import com.master.webshop.model.User;
+import com.master.webshop.model.*;
 
 import java.util.List;
 
@@ -20,4 +17,8 @@ public interface CartItemService {
 	void removeCartItem(CartItem cartItem);
 
     CartItem save(CartItem cartItem);
+
+    List<CartItem> findByProduct(Product product);
+
+    List<CartItem> findByOrder(Order order);
 }
