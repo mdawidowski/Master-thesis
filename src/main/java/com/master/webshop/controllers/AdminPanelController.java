@@ -46,55 +46,10 @@ public class AdminPanelController {
         Product theProduct = productService.findById(id);
         theModel.addAttribute("product", theProduct);
 
-        // creating list of cartItems that contain chosen product
-        List<CartItem> cartItemList = cartItemService.findByProduct(theProduct);
-        theModel.addAttribute("cartItemList", cartItemList);
+        Map<Product, Apriori> aprioriMap;
 
-        // creating list of cartItems that contain all products from all orders that contain chosen product
-        List<CartItem> cartItemsByOrders = new ArrayList<>();
-        for (int i = 0; i < cartItemList.size(); i++) {
-            cartItemsByOrders.addAll(cartItemService.findByOrder(cartItemList.get(i).getOrder()));
-        }
+        aprioriMap = cartItemService.getAssociationRules(theProduct);
 
-        // getting amount of all orders
-        int amountOfAllOrders = orderService.findAll().size();
-
-        // hashmap that contain association rules
-        Apriori apriori;
-        Apriori newApriori;
-        Map<Product, Apriori> aprioriMap = new HashMap<>();
-
-        // support frq(X,Y)/totalOrders
-        // confidence frq(X,Y)/frq(X)
-        // lift support/support(X)*(support(Y)
-
-        for (int i = 0; i < cartItemsByOrders.size(); i++) {
-            if (cartItemsByOrders.get(i).getProduct() != theProduct){
-
-                List<CartItem> cartItemsListForProductY = cartItemService.findByProduct(cartItemsByOrders.get(i).getProduct());
-
-                if (aprioriMap.containsKey(cartItemsByOrders.get(i).getProduct())){
-                    apriori = new Apriori(
-                            1.0/amountOfAllOrders,
-                            1.0/cartItemList.size(),
-                            (1.0/amountOfAllOrders)/(((double)cartItemList.size()/amountOfAllOrders) * ((double)cartItemsListForProductY.size()/amountOfAllOrders)));
-
-                    newApriori = new Apriori(aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getSupport(), aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getConfidence(), aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getLift());
-                    newApriori.mergeApriori(apriori);
-
-                    aprioriMap.put(cartItemsByOrders.get(i).getProduct(), newApriori);
-                } else {
-                    apriori = new Apriori(
-                            1.0/amountOfAllOrders,
-                            1.0/cartItemList.size(),
-                            (1.0/amountOfAllOrders)/(((double)cartItemList.size()/amountOfAllOrders) * ((double)cartItemsListForProductY.size()/amountOfAllOrders)));
-                    aprioriMap.put(cartItemsByOrders.get(i).getProduct(), apriori);
-                }
-            }
-        }
-
-
-        theModel.addAttribute("cartItemsByOrders", cartItemsByOrders);
         theModel.addAttribute("supportMap", aprioriMap);
 
         return "admin/apriori-result";

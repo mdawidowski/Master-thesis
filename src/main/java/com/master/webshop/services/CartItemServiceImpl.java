@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CartItemServiceImpl implements CartItemService{
@@ -19,7 +18,13 @@ public class CartItemServiceImpl implements CartItemService{
 	
 	@Autowired
 	private ProductToCartItemRepository productToCartItemRepository;
-	
+
+	@Autowired
+	private CartItemService cartItemService;
+
+	@Autowired
+	private OrderService orderService;
+
 	public List<CartItem> findByShoppingCart(ShoppingCart shoppingCart) {
 		return cartItemRepository.findByShoppingCart(shoppingCart);
 	}
@@ -99,4 +104,58 @@ public class CartItemServiceImpl implements CartItemService{
 	public List<CartItem> findByOrder(Order order) {
 		return cartItemRepository.findByOrder(order);
 	}
+
+	@Override
+	public Map<Product, Apriori> getAssociationRules(Product product) {
+
+		// creating list of cartItems that contain chosen product
+		List<CartItem> cartItemList = cartItemService.findByProduct(product);
+
+		// creating list of cartItems that contain all products from all orders that contain chosen product
+		List<CartItem> cartItemsByOrders = new ArrayList<>();
+		for (int i = 0; i < cartItemList.size(); i++) {
+			cartItemsByOrders.addAll(cartItemService.findByOrder(cartItemList.get(i).getOrder()));
+		}
+
+		// getting amount of all orders
+		int amountOfAllOrders = orderService.findAll().size();
+
+		// hashmap that contain association rules
+		Apriori apriori;
+		Apriori newApriori;
+		Map<Product, Apriori> aprioriMap = new HashMap<>();
+
+		// support frq(X,Y)/totalOrders
+		// confidence frq(X,Y)/frq(X)
+		// lift support/support(X)*(support(Y)
+
+		for (int i = 0; i < cartItemsByOrders.size(); i++) {
+			if (cartItemsByOrders.get(i).getProduct() != product){
+
+				List<CartItem> cartItemsListForProductY = cartItemService.findByProduct(cartItemsByOrders.get(i).getProduct());
+
+				if (aprioriMap.containsKey(cartItemsByOrders.get(i).getProduct())){
+					apriori = new Apriori(
+							1.0/amountOfAllOrders,
+							1.0/cartItemList.size(),
+							(1.0/amountOfAllOrders)/(((double)cartItemList.size()/amountOfAllOrders) * ((double)cartItemsListForProductY.size()/amountOfAllOrders)));
+
+					newApriori = new Apriori(aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getSupport(), aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getConfidence(), aprioriMap.get(cartItemsByOrders.get(i).getProduct()).getLift());
+					newApriori.mergeApriori(apriori);
+
+					aprioriMap.put(cartItemsByOrders.get(i).getProduct(), newApriori);
+				} else {
+					apriori = new Apriori(
+							1.0/amountOfAllOrders,
+							1.0/cartItemList.size(),
+							(1.0/amountOfAllOrders)/(((double)cartItemList.size()/amountOfAllOrders) * ((double)cartItemsListForProductY.size()/amountOfAllOrders)));
+					aprioriMap.put(cartItemsByOrders.get(i).getProduct(), apriori);
+				}
+			}
+		}
+
+		return aprioriMap;
+	}
+
+
 }

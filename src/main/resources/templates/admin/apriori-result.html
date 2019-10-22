@@ -29,7 +29,9 @@
 
             <tbody>
                 <tr th:each="cartItem : ${supportMap}">
-                    <td th:text="${cartItem.key.getName()}"></td>
+                    <td>
+                        <a th:href="@{/products/product/__${cartItem.key.getId()}__}"
+                           th:text="${cartItem.key.getName()}"></a></td>
                     <td th:text="${cartItem.value.getSupport()}"></td>
                     <td th:text="${cartItem.value.getConfidence()}"></td>
                     <td th:text="${cartItem.value.getLift()}"></td>
