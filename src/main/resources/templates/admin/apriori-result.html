@@ -17,10 +17,25 @@
 <div class="col" layout:fragment="content">
     <div class="container">
         <h3 th:text="${product.name}" ></h3>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Support</th>
+                <th>Confidence</th>
+                <th>Lift</th>
+            </tr>
+            </thead>
 
-        <h5 th:each="cartItem : ${cartItemsByOrders}">
-            <a th:text="${cartItem.product.getName()}"></a>
-        </h5>
+            <tbody>
+                <tr th:each="cartItem : ${supportMap}">
+                    <td th:text="${cartItem.key.getName()}"></td>
+                    <td th:text="${cartItem.value.getSupport()}"></td>
+                    <td th:text="${cartItem.value.getConfidence()}"></td>
+                    <td th:text="${cartItem.value.getLift()}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
