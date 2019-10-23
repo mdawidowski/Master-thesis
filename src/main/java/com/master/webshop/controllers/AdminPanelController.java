@@ -1,7 +1,6 @@
 package com.master.webshop.controllers;
 
 import com.master.webshop.model.Apriori;
-import com.master.webshop.model.CartItem;
 import com.master.webshop.model.Product;
 import com.master.webshop.services.CartItemService;
 import com.master.webshop.services.OrderService;
@@ -11,9 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -36,7 +32,7 @@ public class AdminPanelController {
 
     @GetMapping("/admin/panel")
     public String getAdminPanel(Model theModel){
-        return "adminPanel";
+        return "admin/adminPanel";
     }
 
     @RequestMapping("/admin/apriori/{id}")

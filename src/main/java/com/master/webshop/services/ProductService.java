@@ -16,4 +16,8 @@ public interface ProductService {
     void deleteById(Long theId);
 
     List<Product> findAllByOrderByCategory();
+
+    List<Product> getFiveRandomProducts();
+
+    List<Product> randomListOfProducts(List<Product> productList, int size);
 }

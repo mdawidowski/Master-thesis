@@ -17,5 +17,6 @@ public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 	List<CartItem> findByProduct(Product product);
 
 	List<CartItem> findByOrder(Order order);
+
 }
 

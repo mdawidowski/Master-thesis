@@ -11,13 +11,24 @@
 <div class="container">
     <div class="row">
         <div class="col" layout:fragment="content">
-            <h3>Nice to see you <span th:utext="${username}"></span>!</h3>
+            <h3>Nice to see you <span th:text="${username}"></span>!</h3>
             <div class="jumbotron">
                 <h4>Great offers!</h4>
                 <tr th:each="tempProduct : ${products}">
                     <a th:href="@{/products/product/__${tempProduct.id}__}"><img th:src="${tempProduct.imageURL}" width="150" /></a>
                 </tr>
             </div>
+
+
+        <div class="container">
+            <h4>Because you bought <a th:href="@{/products/product/__${boughtProduct.get(0).id}__}" th:text="${boughtProduct.get(0).name}" /> you may also like: </h4>
+            <div class="jumbotron">
+            <tr th:each="userLikesProduct : ${productsYouMayAlsoLike}">
+                <a th:href="@{/products/product/__${userLikesProduct.key.id}__}"><img th:src="${userLikesProduct.key.imageURL}" width="150" /></a>
+            </tr>
+            </div>
+        </div>
+
         </div>
     </div>
 </div>
