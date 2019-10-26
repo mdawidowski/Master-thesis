@@ -41,8 +41,6 @@ public class HomeController {
     @Autowired
     CartItemService cartItemService;
 
-    List<Product> randomProductsList = new ArrayList<Product>() {};
-
     @RequestMapping(value= {"/home/index"}, method= RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView model;
@@ -51,33 +49,33 @@ public class HomeController {
         User user = userService.findUserByUsername(auth.getName());
 
         // create users shopping cart if he doesn't have one
-        final String CREATE_NEW_SHOPPING_CART = "INSERT IGNORE INTO `shopping_cart`\n" +
-                "SET `grand_total` = 0,\n" +
-                "`user_id` = ?;\n";
-        jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId());
+        final String CREATE_NEW_SHOPPING_CART = "INSERT INTO shopping_cart (id, grand_total, user_id) SELECT  (SELECT MAX(id)+1 FROM public.shopping_cart), 0, ? WHERE NOT EXISTS (SELECT 1 FROM shopping_cart WHERE user_id=?);";
+        jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId(), user.getId());
 
 
         // get list of user orders
         List<Order> listOfOrdersByUser = orderService.findByUser(user);
 
-        // get list of products bought by user
-        List<CartItem> listOfCartItemsByUser = new ArrayList<>();
+        List<Product> boughtProduct = new ArrayList<>();
 
-        for (int i = 0; i < listOfOrdersByUser.size(); i++) {
-            listOfCartItemsByUser.addAll(cartItemService.findByOrder(listOfOrdersByUser.get(i)));
+        if (!listOfOrdersByUser.isEmpty()) {        // get list of products bought by user
+            List<CartItem> listOfCartItemsByUser = new ArrayList<>();
+
+            for (int i = 0; i < listOfOrdersByUser.size(); i++) {
+                listOfCartItemsByUser.addAll(cartItemService.findByOrder(listOfOrdersByUser.get(i)));
+            }
+
+            List<Product> listOfProductsByUser = new ArrayList<>();
+            for (int i = 0; i < listOfOrdersByUser.size(); i++) {
+                listOfProductsByUser.add(listOfCartItemsByUser.get(i).getProduct());
+            }
+
+            boughtProduct = productService.randomListOfProducts(listOfProductsByUser, 1);
+            model.addObject("productsYouMayAlsoLike", cartItemService.getAssociationRules(boughtProduct.get(0)));
         }
-
-        List<Product> listOfProductsByUser = new ArrayList<>();
-        for (int i = 0; i < listOfOrdersByUser.size(); i++) {
-            listOfProductsByUser.add(listOfCartItemsByUser.get(i).getProduct());
-        }
-
-        List<Product> boughtProduct = productService.randomListOfProducts(listOfProductsByUser, 1);
-
         // add all needed objects to the model
-        model.addObject("productsYouMayAlsoLike", cartItemService.getAssociationRules(boughtProduct.get(0)));
-        model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("boughtProduct",  boughtProduct);
+        model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
         return model;

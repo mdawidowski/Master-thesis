@@ -1,6 +1,6 @@
 package com.master.webshop.model;
 
-public class Apriori {
+public class Apriori implements Comparable<Apriori>{
 
     private double support;
 
@@ -44,5 +44,10 @@ public class Apriori {
         this.lift += apriori.lift;
 
         return null;
+    }
+
+    @Override
+    public int compareTo(Apriori apriori) {
+        return (int)(this.support - apriori.getSupport());
     }
 }

@@ -1,18 +1,22 @@
 package com.master.webshop.services;
 
 
+import com.master.webshop.model.Apriori;
 import com.master.webshop.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryService {
 
-    public List<Category> findAll();
+    List<Category> findAll();
 
-    public Category findById(int theId);
+    Category findById(int theId);
 
-    public void save(Category theCategory);
+    void save(Category theCategory);
 
-    public void deleteById(int theId);
+    void deleteById(int theId);
+
+    Map<Category, Apriori> categoryAssociationRules(Category category);
 
 }
