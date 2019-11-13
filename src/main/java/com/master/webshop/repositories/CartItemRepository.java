@@ -5,6 +5,7 @@ import com.master.webshop.model.CartItem;
 import com.master.webshop.model.Order;
 import com.master.webshop.model.Product;
 import com.master.webshop.model.ShoppingCart;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +19,9 @@ public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 
 	List<CartItem> findByOrder(Order order);
 
+	@Query("select count(id) from CartItem")
+	double countAll();
+
+	double countAllByProduct(Product product);
 }
 

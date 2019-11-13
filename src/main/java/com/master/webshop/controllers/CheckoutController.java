@@ -117,4 +117,14 @@ public class CheckoutController {
 
 		return "orders/all-orders";
 	}
+
+	@GetMapping("admin/all-cartitems")
+	public String listAllCartItems(Model theModel) {
+		List<CartItem> orderList = cartItemService.findAll();
+
+		// add to the spring model
+		theModel.addAttribute("orders", orderList);
+
+		return "orders/all-cartitems";
+	}
 }

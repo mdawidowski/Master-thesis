@@ -14,6 +14,8 @@ public interface CartItemService {
 	CartItem addProductToCartItem(Product product, User user, int qty);
 	
 	CartItem findById(Long id);
+
+	List<CartItem> findAll();
 	
 	void removeCartItem(CartItem cartItem);
 
@@ -23,5 +25,9 @@ public interface CartItemService {
 
     List<CartItem> findByOrder(Order order);
 
-	Map<Product, Apriori> getAssociationRules(Product product);
+	double countAll();
+
+	double countAllByProduct(Product product);
+
+//	Map<Product, Apriori> getAssociationRules(Product product);
 }

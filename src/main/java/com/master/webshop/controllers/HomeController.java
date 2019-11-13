@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,29 +53,7 @@ public class HomeController {
         final String CREATE_NEW_SHOPPING_CART = "INSERT INTO shopping_cart (id, grand_total, user_id) SELECT  (SELECT MAX(id)+1 FROM public.shopping_cart), 0, ? WHERE NOT EXISTS (SELECT 1 FROM shopping_cart WHERE user_id=?);";
         jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId(), user.getId());
 
-
-        // get list of user orders
-        List<Order> listOfOrdersByUser = orderService.findByUser(user);
-
-        List<Product> boughtProduct = new ArrayList<>();
-
-        if (!listOfOrdersByUser.isEmpty()) {        // get list of products bought by user
-            List<CartItem> listOfCartItemsByUser = new ArrayList<>();
-
-            for (int i = 0; i < listOfOrdersByUser.size(); i++) {
-                listOfCartItemsByUser.addAll(cartItemService.findByOrder(listOfOrdersByUser.get(i)));
-            }
-
-            List<Product> listOfProductsByUser = new ArrayList<>();
-            for (int i = 0; i < listOfOrdersByUser.size(); i++) {
-                listOfProductsByUser.add(listOfCartItemsByUser.get(i).getProduct());
-            }
-
-            boughtProduct = productService.randomListOfProducts(listOfProductsByUser, 1);
-            model.addObject("productsYouMayAlsoLike", cartItemService.getAssociationRules(boughtProduct.get(0)));
-        }
         // add all needed objects to the model
-        model.addObject("boughtProduct",  boughtProduct);
         model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");
