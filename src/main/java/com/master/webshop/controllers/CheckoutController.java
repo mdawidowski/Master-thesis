@@ -7,6 +7,7 @@ import com.master.webshop.services.ShoppingCartService;
 import com.master.webshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.CollectionUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,9 @@ public class CheckoutController {
 	@Autowired
 	private OrderService orderService;
 
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
 	@RequestMapping("/checkout")
 	public String checkout(@RequestParam("id") Long cartId,
                            @RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField, Model model,
@@ -59,7 +63,6 @@ public class CheckoutController {
 		if (missingRequiredField) {
 			model.addAttribute("missingRequiredField", true);
 		}
-
 		return "orders/checkout";
 
 	}
@@ -72,13 +75,23 @@ public class CheckoutController {
 		model.addAttribute("cartItemList", cartItemList);
 
 		User user = userService.findUserByUsername(principal.getName());
-		
+
+		final String query = "UPDATE association SET occurences = occurences + 1 WHERE associated_product_id = ? and selected_product_id = ?;\n" +
+				"INSERT INTO association (occurences, associated_product_id, selected_product_id)\n" +
+				"       SELECT 1, ?, ? \n" +
+				"       WHERE NOT EXISTS (SELECT 1 FROM association WHERE associated_product_id = ? and selected_product_id = ?);";
+
+		for (int i = 0; i < cartItemList.size(); i++) {
+			for (int j = 0; j < cartItemList.size(); j++) {
+				if (i != j){
+					jdbcTemplate.update(query, cartItemList.get(i).getProduct().getId(), cartItemList.get(j).getProduct().getId(),  cartItemList.get(i).getProduct().getId(), cartItemList.get(j).getProduct().getId(), cartItemList.get(i).getProduct().getId(), cartItemList.get(j).getProduct().getId());
+				}
+			}
+		}
+
 		Order order = orderService.createOrder(shoppingCart, user);
 
 		shoppingCartService.clearShoppingCart(shoppingCart);
-		
-		LocalDate today = LocalDate.now();
-		LocalDate estimatedDeliveryDate;
 
 		return "orders/orderSubmittedPage";
 	}
