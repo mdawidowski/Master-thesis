@@ -1,7 +1,5 @@
 package com.master.webshop.services;
 
-import com.master.webshop.model.Apriori;
-import com.master.webshop.model.CartItem;
 import com.master.webshop.model.Category;
 import com.master.webshop.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +47,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(int theId) {
         categoryRepository.deleteById(theId);
-    }
-
-    @Override
-    public Map<Category, Apriori> categoryAssociationRules(Category category){
-
-        return null;
     }
 
 }

@@ -1,13 +1,7 @@
 package com.master.webshop.controllers;
 
-import com.master.webshop.model.CartItem;
-import com.master.webshop.model.Order;
-import com.master.webshop.model.Product;
-import com.master.webshop.model.User;
-import com.master.webshop.services.CartItemService;
-import com.master.webshop.services.OrderService;
-import com.master.webshop.services.ProductService;
-import com.master.webshop.services.UserService;
+import com.master.webshop.model.*;
+import com.master.webshop.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
@@ -42,6 +36,9 @@ public class HomeController {
     @Autowired
     CartItemService cartItemService;
 
+    @Autowired
+    AssociationService associationService;
+
     @RequestMapping(value= {"/home/index"}, method= RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView model;
@@ -52,8 +49,21 @@ public class HomeController {
         // create users shopping cart if he doesn't have one
         final String CREATE_NEW_SHOPPING_CART = "INSERT INTO shopping_cart (id, grand_total, user_id) SELECT  (SELECT MAX(id)+1 FROM public.shopping_cart), 0, ? WHERE NOT EXISTS (SELECT 1 FROM shopping_cart WHERE user_id=?);";
         jdbcTemplate.update(CREATE_NEW_SHOPPING_CART, user.getId(), user.getId());
+        
+        List<Order> orderList = orderService.findByUser(user);
+        List<CartItem> cartItemList = new ArrayList<>();
+        for (int i = 0; i < orderList.size(); i++) {
+            cartItemList.addAll(cartItemService.findByOrder(orderList.get(i)));
+        }
+        Random random = new Random();
+        int item = random.nextInt(cartItemList.size());
+        Product boughtProduct = cartItemList.get(item).getProduct();
+
+        List<Association> productsYouMayAlsoLike = associationService.findBySelectedProductOrderByOccurencesLimit5(boughtProduct);
 
         // add all needed objects to the model
+        model.addObject("productsYouMayAlsoLike", productsYouMayAlsoLike);
+        model.addObject("boughtProduct", boughtProduct);
         model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("username", user.getUsername().toUpperCase());
         model.setViewName("home/index");

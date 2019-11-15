@@ -12,4 +12,6 @@ public interface AssociationService {
     List<Association> findBySelectedProductOrderByOccurences(Product product);
 
     void save(Association association);
+
+    List<Association> findBySelectedProductOrderByOccurencesLimit5(Product product);
 }
