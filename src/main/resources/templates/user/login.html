@@ -8,29 +8,44 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
 <body>
-<div class="container">
-    <div class="alert alert-danger" role="alert" th:if="${param.error}">
-        The username or password is incorrect!
-    </div>
-    <h2>Welcome in Webshop!</h2>
-    <h4>Account is required to continue using the service.</h4>
-    <form th:action="@{/login}" method="post" >
-        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-        <label for="username" class="sr-only">Username</label>
-        <input type="username" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="remember-me" /> Remember me
-            </label>
+<div class="wrapper">
+    <h2 class="text-center">Welcome in Webshop!</h2>
+    <h4 class="text-center">Account is required to continue using the service.</h4>
+    <br>
+    <div class="formContent">
+        <form th:action="@{/login}" method="post" >
+            <div class="formHeader">
+                <h1 class="h3 mb-3 font-weight-normal"><b>Sign in</b></h1>
+            </div>
+            <div class="panel panel-default form-login">
+                <br><br>
+                <div class="panel-body">
+                    <label for="username" class="sr-only ">Username</label>
+                    <input type="username" id="username" name="username" class="form-control text-center username" placeholder="Username" required autofocus>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="password" class="form-control text-center password" placeholder="Password" required>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="remember-me" /> Remember me
+                        </label>
+                    </div>
+                <button class="btn btn-lg btn-dark btn-block" type="submit">Sign in</button>
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <div class="margin-top20 text-center"> Don't have an account? <a th:href="@{/signup}">Create an account</a></div>
-    </form>
+        </form>
+            <div class="formFooter">
+                Don't have an account?
+                <br>
+                <a class="underlineHover" th:href="@{/signup}">Create an account</a>
+            </div>
+        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+            The username or password is incorrect!
+        </div>
+    </div>
 </div>
 </body>
 </html>
