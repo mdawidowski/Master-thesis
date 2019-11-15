@@ -15,4 +15,6 @@ public interface OrderService {
     List<Order> findAll();
 
     List<Order> findByUser(User user);
+
+    double countAll();
 }

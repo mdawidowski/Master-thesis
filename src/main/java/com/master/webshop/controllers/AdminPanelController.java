@@ -4,7 +4,9 @@ import com.master.webshop.model.Association;
 import com.master.webshop.model.Product;
 import com.master.webshop.services.AssociationService;
 import com.master.webshop.services.CartItemService;
+import com.master.webshop.services.OrderService;
 import com.master.webshop.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +22,17 @@ import java.util.Map;
 public class AdminPanelController {
 //    creating mapping
 
+    @Autowired
     ProductService productService;
 
+    @Autowired
     AssociationService associationService;
 
+    @Autowired
     CartItemService cartItemService;
 
-    public AdminPanelController(ProductService productService, AssociationService associationService, CartItemService cartItemService) {
-        this.productService = productService;
-        this.associationService = associationService;
-        this.cartItemService = cartItemService;
-    }
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/admin/panel")
     public String getAdminPanel() {
@@ -51,7 +53,7 @@ public class AdminPanelController {
 
         theModel.addAttribute("productsMap", productIntegerMap);
         theModel.addAttribute("product", theProduct);
-        theModel.addAttribute("allCartItems", cartItemService.countAll());
+        theModel.addAttribute("allOrders", orderService.countAll());
         theModel.addAttribute("cartItemListSize", (double)associations.size());
         theModel.addAttribute("associations", associations);
         return "admin/apriori-result";

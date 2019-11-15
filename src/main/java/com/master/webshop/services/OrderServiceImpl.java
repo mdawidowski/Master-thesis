@@ -63,4 +63,9 @@ public class OrderServiceImpl implements OrderService{
 	public List<Order> findByUser(User user){
 		return orderRepository.findByUser(user);
 	}
+
+	@Override
+	public double countAll() {
+		return orderRepository.countAll();
+	}
 }
