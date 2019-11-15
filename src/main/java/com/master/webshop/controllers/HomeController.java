@@ -59,17 +59,22 @@ public class HomeController {
         for (int i = 0; i < cartItemList.size(); i++) {
             productList.add(cartItemList.get(i).getProduct());
         }
+        Product boughtProduct = new Product();
 
-        Product boughtProduct = productService.randomListOfProducts(productList, 1).get(0);
+        if (orderList.size() > 1){
+            boughtProduct = productService.randomListOfProducts(productList, 1).get(0);
+        }
 
-        List<Association> associationList = associationService.findBySelectedProductOrderByOccurences(boughtProduct);
         List<Product> productsYouMayAlsoLike = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            productsYouMayAlsoLike.add(associationList.get(i).getAssociatedProduct());
+        if (orderList.size() > 1){
+            List<Association> associationList = associationService.findBySelectedProductOrderByOccurences(boughtProduct);
+            for (int i = 0; i < 5; i++) {
+                productsYouMayAlsoLike.add(associationList.get(i).getAssociatedProduct());
+            }
+            model.addObject("productsYouMayAlsoLike", productsYouMayAlsoLike);
         }
 
         // add all needed objects to the model
-        model.addObject("productsYouMayAlsoLike", productsYouMayAlsoLike);
         model.addObject("boughtProduct", boughtProduct);
         model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("username", user.getUsername().toUpperCase());

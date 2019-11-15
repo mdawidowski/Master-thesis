@@ -7,7 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 <div class="wrapper">
@@ -30,16 +30,14 @@
                     <label for="password" class="sr-only"></label>
                     <input type="password" th:field="*{password}" class="form-control password text-center" id="password"
                     placeholder="Password" required>
-                    <div class="form-control-feedback">
-                        <a class="text-danger align-middle" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-                        </a>
-                    </div>
+                    <div class=" alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                     <div class="form-control-feedback">
                                  <a class="text-danger align-middle" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
                                  </a>
                     </div>
+
                     <button type="submit" class="btn btn-dark">Register</button>
-            </div>
+                </div>
             </div>
     </form>
         <div class="formFooter">
