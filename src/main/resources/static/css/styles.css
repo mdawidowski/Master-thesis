@@ -19,10 +19,12 @@
 }
 
 .password {
-    margin-top: 10px;
     margin-bottom: 20px;
 }
 
+.signUpWrapper{
+    margin-top: 100px;
+}
 .formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
@@ -64,14 +66,17 @@
   min-height: 100%;
   padding: 20px;
 }
-
+.a {
+    color: grey;
+    font-color: black;
+}
 .underlineHover:after {
   display: block;
   left: 0;
   bottom: -10px;
   width: 0;
   height: 2px;
-  background-color: #56baed;
+  background-color: grey;
   content: "";
   transition: width 0.2s;
 }

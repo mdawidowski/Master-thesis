@@ -66,7 +66,7 @@ public class UserController {
             model.setViewName("user/signup");
         } else {
             userService.saveUser(user);
-            model.addObject("msg", "User has been registered successfully!");
+//            model.addObject("msg", "User has been registered successfully!");
             model.addObject("user", new User());
             model.setViewName("user/signup");
         }
