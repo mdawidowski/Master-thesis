@@ -24,7 +24,7 @@
                     <h4>Because you bought <a th:href="@{/products/product/__${boughtProduct.id}__}" th:text="${boughtProduct.name}" /> you may also like: </h4>
                     <div class="jumbotron">
                     <tr th:each="userLikesProduct : ${productsYouMayAlsoLike}">
-                        <a th:href="@{/products/product/__${userLikesProduct.getAssociatedProduct().getId()}__}"><img th:src="${userLikesProduct.getAssociatedProduct().imageURL}" width="150" /></a>
+                        <a th:href="@{/products/product/__${userLikesProduct.getId()}__}"><img th:src="${userLikesProduct.imageURL}" width="150" /></a>
                     </tr>
                     </div>
                 </div>

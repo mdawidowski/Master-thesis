@@ -32,9 +32,5 @@ public class AssociationServiceImpl implements AssociationService {
         associationRepository.save(association);
     }
 
-    @Override
-    public List<Association> findBySelectedProductOrderByOccurencesLimit5(Product product) {
-        return associationRepository.findBySelectedProductOrderByOccurencesLimit5(product.getId());
-    }
 }
 
