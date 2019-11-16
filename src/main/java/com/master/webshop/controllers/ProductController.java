@@ -80,9 +80,8 @@ public class ProductController {
 
         // save the product
         productService.save(theProduct);
-
         // use a redirect to prevent duplicate submissions
-        return "redirect:/products/list";
+        return "redirect:/products/product/" + theProduct.getId();
     }
 
 

@@ -39,6 +39,9 @@ public class HomeController {
     @Autowired
     AssociationService associationService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @RequestMapping(value= {"/home/index"}, method= RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView model;
@@ -75,6 +78,7 @@ public class HomeController {
         }
 
         // add all needed objects to the model
+        model.addObject("categories", categoryService.findAll());
         model.addObject("boughtProduct", boughtProduct);
         model.addObject("products", productService.getFiveRandomProducts());
         model.addObject("username", user.getUsername().toUpperCase());

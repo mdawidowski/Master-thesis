@@ -10,23 +10,38 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col" layout:fragment="content">
+        <div class="col-lg-3" layout:fragment="sidebar">
+            <h1 class="my-4">Categories</h1>
+            <div class="list-group" th:each="category: ${categories}" >
+                <a th:text="${category.name}" class="list-group-item"></a>
+            </div>
+        </div>
+        <div class="col-lg-9" layout:fragment="content">
             <h3>Nice to see you <span th:text="${username}"></span>!</h3>
-            <div class="jumbotron">
                 <h4>Great offers!</h4>
+
+            <div class="row">
                 <tr th:each="tempProduct : ${products}">
-                    <a th:href="@{/products/product/__${tempProduct.id}__}"><img th:src="${tempProduct.imageURL}" width="150" /></a>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a th:href="@{/products/product/__${tempProduct.id}__}"><img class="card-img-top" th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_400,w_650/__${tempProduct.imageURL}__}" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a th:href="@{/products/product/__${tempProduct.id}__}" th:text="${tempProduct.name}"></a>
+                                </h4>
+                                <h5 th:text="@{__${tempProduct.price}__ $}"></h5>
+                            </div>
+
+                        </div>
+                    </div>
                 </tr>
             </div>
-
             <div th:if="${boughtProduct != null && productsYouMayAlsoLike != null }">
                 <div class="container">
                     <h4>Because you bought <a th:href="@{/products/product/__${boughtProduct.id}__}" th:text="${boughtProduct.name}" /> you may also like: </h4>
-                    <div class="jumbotron">
                     <tr th:each="userLikesProduct : ${productsYouMayAlsoLike}">
                         <a th:href="@{/products/product/__${userLikesProduct.getId()}__}"><img th:src="${userLikesProduct.imageURL}" width="150" /></a>
                     </tr>
-                    </div>
                 </div>
             </div>
         </div>

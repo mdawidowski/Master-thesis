@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService{
 
     public List<Product> getFiveRandomProducts(){
         List<Product> theProducts = findAllByOrderByCategory();
-        randomProductsList = randomListOfProducts(theProducts, 5);
+        randomProductsList = randomListOfProducts(theProducts, 6);
         return randomProductsList;
     }
 
