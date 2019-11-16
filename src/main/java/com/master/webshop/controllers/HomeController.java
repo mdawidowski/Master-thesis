@@ -71,7 +71,7 @@ public class HomeController {
         List<Product> productsYouMayAlsoLike = new ArrayList<>();
         if (orderList.size() > 1){
             List<Association> associationList = associationService.findBySelectedProductOrderByOccurences(boughtProduct);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
                 productsYouMayAlsoLike.add(associationList.get(i).getAssociatedProduct());
             }
             model.addObject("productsYouMayAlsoLike", productsYouMayAlsoLike);

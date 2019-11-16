@@ -39,9 +39,22 @@
             <div th:if="${boughtProduct != null && productsYouMayAlsoLike != null }">
                 <div class="container">
                     <h4>Because you bought <a th:href="@{/products/product/__${boughtProduct.id}__}" th:text="${boughtProduct.name}" /> you may also like: </h4>
+                    <br>
+                    <div class="row">
                     <tr th:each="userLikesProduct : ${productsYouMayAlsoLike}">
-                        <a th:href="@{/products/product/__${userLikesProduct.getId()}__}"><img th:src="${userLikesProduct.imageURL}" width="150" /></a>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a th:href="@{/products/product/__${userLikesProduct.getId()}__}"><img class="card-img-top" th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_400,w_650/__${userLikesProduct.imageURL}__}" width="150" /></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a th:href="@{/products/product/__${userLikesProduct.getId()}__}" th:text="${userLikesProduct.name}"></a>
+                                    </h4>
+                                    <h5 th:text="@{__${userLikesProduct.price}__ $}"></h5>
+                                </div>
+                            </div>
+                        </div>
                     </tr>
+                    </div>
                 </div>
             </div>
         </div>
