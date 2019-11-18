@@ -6,10 +6,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="css/category-show.css">
+    <link rel="stylesheet" href="css/category_show.css" th:href="@{css/category_show.css}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
     <title>Category Page</title>
 </head>
 <body>
@@ -23,10 +22,10 @@
         <div th:each="product: ${products}" >
             <a th:href="@{/products/product/__${product.id}__}" >
             <div class="list-group-item">
-                <div class="row">
+                <div class="row likn">
                     <img class="col-md-0" th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_80,w_140/__${product.imageURL}__}" alt="">
-                    <h3 class="col-md-8"th:text="${product.name}"></h3>
-                    <h3 class="col-md-2 text-right" th:text="@{__${product.price}__ $}"></h3>
+                    <h3 class="col-md-8" th:text="${product.name}"></h3>
+                    <h3 class="col-md-2 text-right" th:text="' $' + ${product.price}"></h3>
                 </div>
             </div>
             </a>

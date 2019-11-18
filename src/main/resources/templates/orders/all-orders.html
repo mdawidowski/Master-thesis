@@ -30,7 +30,7 @@
             <tbody>
             <tr th:each="tempOrder : ${orders}">
                 <td th:text="${tempOrder.id}" />
-                <td th:text="${tempOrder.orderTotal}" />
+                <td th:text="' $' + ${tempOrder.orderTotal}" />
                 <td th:text="${tempOrder.user.id}" />
                 <td>
                     <a th:href="@{/order/__${tempOrder.id}__}"

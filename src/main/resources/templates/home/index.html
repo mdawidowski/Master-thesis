@@ -28,7 +28,7 @@
                                 <h4 class="card-title">
                                     <a th:href="@{/products/product/__${tempProduct.id}__}" th:text="${tempProduct.name}"></a>
                                 </h4>
-                                <h5 th:text="@{__${tempProduct.price}__ $}"></h5>
+                                <h5 th:text="' $' + ${tempProduct.price}"></h5>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                     <h4 class="card-title">
                                         <a th:href="@{/products/product/__${userLikesProduct.getId()}__}" th:text="${userLikesProduct.name}"></a>
                                     </h4>
-                                    <h5 th:text="@{__${userLikesProduct.price}__ $}"></h5>
+                                    <h5 th:text="' $' + ${userLikesProduct.price}"></h5>
                                 </div>
                             </div>
                         </div>

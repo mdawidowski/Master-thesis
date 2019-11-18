@@ -27,7 +27,7 @@
 							<div class="row">
 								<div class="col-xs-7 text-left">Total amount:</div>
 								<div class="col-xs-5 text-right">
-									$<span th:text="${shoppingCart.grandTotal}"></span>
+									<span th:text="' $' + ${shoppingCart.grandTotal}"></span>
 								</div>
 							</div>
 						</div>

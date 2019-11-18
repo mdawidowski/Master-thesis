@@ -37,7 +37,7 @@
         <tbody>
         <tr th:each="tempProduct : ${products}">
             <td th:text="${tempProduct.name}" />
-            <td th:text="${tempProduct.price}" />
+            <td th:text="' $' + ${tempProduct.price}" />
             <td th:text="${tempProduct.unit}" />
             <td th:text="${tempProduct.category.getName()}" />
             <td>

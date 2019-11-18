@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><b>Price:</b></label>
                     <div class="col-sm-10">
-                        <p class="form-control-static" th:text="${order.orderTotal} + ' $'">Price</p>
+                        <p class="form-control-static" th:text="' $' + ${order.orderTotal}">Price</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -41,16 +41,16 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Product name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         <div th:each="cartItem : ${cartItems}">
                             <tr>
-                                <td><a th:href="@{/products/product/__${cartItem.product.id}__}"><span th:text="${cartItem.product.name}"> </span></a> </td>
-                                <td th:text="${cartItem.qty}"></td>
-                                <td><span th:text="${cartItem.product.price}"> </span></td>
+                                <td><a th:href="@{/products/product/__${cartItem.product.id}__}"><img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_40,w_60/__${cartItem.product.imageURL}__}">   <span th:text="@{  __${cartItem.product.name}__}"> </span></a> </td>
+                                <td class="text-center" th:text="${cartItem.qty}"></td>
+                                <td class="text-center">$<span th:text="${cartItem.product.price}"> </span></td>
                             </tr>
                          </div>
                     </tbody>
