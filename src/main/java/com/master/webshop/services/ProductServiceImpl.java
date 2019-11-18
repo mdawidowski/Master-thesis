@@ -1,5 +1,6 @@
 package com.master.webshop.services;
 
+import com.master.webshop.model.Category;
 import com.master.webshop.model.Product;
 import com.master.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,10 @@ public class ProductServiceImpl implements ProductService{
             randomProductsList.add(productList.get(generator.nextInt(productList.size())));
         }
         return randomProductsList;
+    }
+
+    @Override
+    public List<Product> findAllByCategory(Category category) {
+        return productRepository.findAllByCategory(category);
     }
 }

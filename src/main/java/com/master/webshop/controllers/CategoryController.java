@@ -2,6 +2,8 @@ package com.master.webshop.controllers;
 
 import com.master.webshop.model.Category;
 import com.master.webshop.services.CategoryService;
+import com.master.webshop.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
+
+    @Autowired
     private CategoryService categoryService;
 
-    public CategoryController(CategoryService theCategoryService) {
-        categoryService = theCategoryService;
-    }
-
+    @Autowired
+    private ProductService productService;
     // add mapping for "/list"
 
     @GetMapping("/list")
@@ -54,6 +56,14 @@ public class CategoryController {
 
         // send over to our form
         return "categories/category-form";
+    }
+
+    @RequestMapping("category/{id}")
+    public String showProduct(@PathVariable int id, Model model){
+
+        model.addAttribute("products", productService.findAllByCategory(categoryService.findById(id)));
+        model.addAttribute("category", categoryService.findById(id));
+        return "categories/category-show";
     }
 
 

@@ -1,5 +1,6 @@
 package com.master.webshop.services;
 
+import com.master.webshop.model.Category;
 import com.master.webshop.model.Product;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface ProductService {
     List<Product> getFiveRandomProducts();
 
     List<Product> randomListOfProducts(List<Product> productList, int size);
+
+    List<Product> findAllByCategory(Category category);
 }

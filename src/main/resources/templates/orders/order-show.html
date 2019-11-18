@@ -41,14 +41,16 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Product name</th>
+                            <th>Quantity</th>
                             <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <div th:each="orderList : ${order.cartItemList}">
+                        <div th:each="cartItem : ${cartItems}">
                             <tr>
-                                <td><a th:href="@{/products/product/__${orderList.product.id}__}"><span th:text="${orderList.product.name}"> </span></a> </td>
-                                <td><span th:text="${orderList.product.price}"> </span></td>
+                                <td><a th:href="@{/products/product/__${cartItem.product.id}__}"><span th:text="${cartItem.product.name}"> </span></a> </td>
+                                <td th:text="${cartItem.qty}"></td>
+                                <td><span th:text="${cartItem.product.price}"> </span></td>
                             </tr>
                          </div>
                     </tbody>

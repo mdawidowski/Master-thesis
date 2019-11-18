@@ -99,6 +99,7 @@ public class CheckoutController {
 	@RequestMapping("order/{id}")
 	public String showProduct(@PathVariable Long id, Model model){
 		model.addAttribute("order", orderService.findById(id));
+		model.addAttribute("cartItems", cartItemService.findByOrder(orderService.findById(id)));
 		return "orders/order-show";
 	}
 
