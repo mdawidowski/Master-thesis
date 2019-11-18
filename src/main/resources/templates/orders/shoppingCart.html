@@ -40,7 +40,7 @@
 					<div class="row" th:each="cartItem : ${cartItemList}">
 						<form th:action="@{/shoppingCart/updateCartItem}" method="post">
 							<div class="col-xs-6">
-								<img th:src="${cartItem.product.imageURL}">
+								<img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_80,w_140/__${cartItem.product.imageURL}__}">
 								<div style="margin-left:50px;">
 								<a th:href="@{/products/product/}+${cartItem.product.id}"><h4 th:text="${cartItem.product.name}"></h4></a>
 								<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="btn btn-dark">Delete</a>
