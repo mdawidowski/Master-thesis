@@ -2,11 +2,15 @@
 <html lang="en" xmlns:th="http://www.w3.org/1000/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/layout}">
 <head>
 	<title>Shopping Cart</title>
+	<link rel="stylesheet" href="css/category_show.css" th:href="@{css/category_show.css}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
 </head>
 
 <body>
 <div class="col" layout:fragment="content">
-		<div class="row" style="margin-top: 10px;">
+	<div class="row" style="margin-top: 10px;">
 			<div class="col-xs-12">
 				<div class="row">
 					<div class="col-xs-6 text-left">
@@ -34,41 +38,57 @@
 						products and add them to cart.</div>
 
 					<br /> <br />
+<!--					<div class="container">-->
+<!--					<div class="row" th:each="cartItem : ${cartItemList}">-->
+<!--						<form th:action="@{/shoppingCart/updateCartItem}" method="post">-->
+<!--							<div class="col-xs-6">-->
+<!--								<img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_80,w_140/__${cartItem.product.imageURL}__}">-->
+<!--								<div style="margin-left:50px;">-->
+<!--								<a th:href="@{/products/product/}+${cartItem.product.id}"><h4 th:text="${cartItem.product.name}"></h4></a>-->
+<!--								<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="btn btn-dark">Delete</a>-->
+<!--								</div>-->
+<!--							</div>-->
 
-				<!--**************** display products in cart ****************-->
-				<div class="container">
-					<div class="row" th:each="cartItem : ${cartItemList}">
-						<form th:action="@{/shoppingCart/updateCartItem}" method="post">
-							<div class="col-xs-6">
-								<img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_80,w_140/__${cartItem.product.imageURL}__}">
-								<div style="margin-left:50px;">
-								<a th:href="@{/products/product/}+${cartItem.product.id}"><h4 th:text="${cartItem.product.name}"></h4></a>
-								<a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="btn btn-dark">Delete</a>
-								</div>
-							</div>
+<!--							<div class="col-xs-2">-->
+<!--								<h5 style="color: #db3208; font-size: large;">-->
+<!--									$<span th:text="${cartItem.product.price}"></span>-->
+<!--								</h5>-->
+<!--							</div>-->
 
-							<div class="col-xs-2">
-								<h5 style="color: #db3208; font-size: large;">
-									$<span th:text="${cartItem.product.price}"></span>
-								</h5>
-							</div>
+<!--							<div class="col-xs-2">-->
+<!--								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input-->
+<!--									th:id="${cartItem.id}" th:name="qty"  class="form-control cartItemQty" th:value="${cartItem.qty}" />-->
+<!--								<button style="display: none;"-->
+<!--										th:id="'update-item-'+${cartItem.id}" type="submit"-->
+<!--										class="btn btn-warning btn-xs">Update</button>-->
+<!--							</div>-->
 
-							<div class="col-xs-2">
-								<input hidden="hidden" name="id" th:value="${cartItem.id}" /> <input
-									th:id="${cartItem.id}" th:name="qty"  class="form-control cartItemQty" th:value="${cartItem.qty}" />
-								<button style="display: none;"
-										th:id="'update-item-'+${cartItem.id}" type="submit"
-										class="btn btn-warning btn-xs">Update</button>
-							</div>
-
-						</form>
-					</div>
+<!--						</form>-->
+<!--					</div>-->
+<!--				</div>-->
 				</div>
-				</div>
+
+			</div>
+
+		</div>
+
+	<!-- end of container -->
+
+<!--**************** display products in cart ****************-->
+<div th:each="cartItem : ${cartItemList}">
+
+		<div class="list-group-item">
+			<div class="row">
+				<a class="col-md-2" th:href="@{/products/product/__${cartItem.product.id}__}" >
+						<h3><img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_80,w_140/__${cartItem.product.imageURL}__}" alt=""></h3>
+				</a>
+				<a class="col-md-7" th:href="@{/products/product/__${cartItem.product.id}__}"><h3 th:text="@{__${cartItem.product.name}__ x __${cartItem.qty}__}" ></h3></a>
+				<h3 class="col-md-2 text-right" th:text="' $' + ${cartItem.product.price}"></h3>
+				<h3 class="col-md-1 text-right"><a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="btn btn-dark">Delete</a></h3>
 			</div>
 		</div>
-	</div>
-	<!-- end of container -->
+</div>
+
 </div>
 </body>
 </html>
