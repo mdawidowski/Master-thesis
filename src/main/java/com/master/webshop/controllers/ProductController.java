@@ -15,7 +15,6 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/products")
 public class ProductController {
 
     private ProductService productService;
@@ -29,7 +28,7 @@ public class ProductController {
 
     // add mapping for "/list"
 
-    @GetMapping("/list")
+    @GetMapping("products/list")
     public String listProducts(Model theModel) {
 
         // get products from db
@@ -41,13 +40,13 @@ public class ProductController {
         return "products/list-products";
     }
 
-    @RequestMapping("product/{id}")
+    @RequestMapping("/products/product/{id}")
     public String showProduct(@PathVariable Long id, Model model){
         model.addAttribute("product", productService.findById(id));
         return "products/product-show";
     }
 
-    @GetMapping("/showFormForAdd")
+    @GetMapping("products/showFormForAdd")
     public String showFormForAdd(Model theModel) {
 
         // create model attribute to bind form data
@@ -59,7 +58,7 @@ public class ProductController {
         return "products/product-form";
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
+    @GetMapping("products/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable Long id,
                                     Model theModel) {
 
@@ -75,7 +74,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/save")
+    @PostMapping("products/save")
     public String saveProduct(@ModelAttribute("product") Product theProduct) {
 
         // save the product
@@ -85,7 +84,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/delete")
+    @PostMapping("products/delete")
     public String delete(@RequestParam("productId") Long theId) {
 
         // delete the product

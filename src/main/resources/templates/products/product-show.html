@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/layout}">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/product_page.css">
 
     <title>Product Page</title>
 </head>
@@ -16,39 +16,37 @@
 <div class="col" layout:fragment="content">
 <div class="container">
     <h2>Product Details</h2>
-    <div>
+    <div class="formContent">
         <form th:action="@{/shoppingCart/addItem}" method="post">
             <input hidden="hidden" th:field="*{product.id}" />
-            <div class="form-group">
-                <label class="col-sm-2 control-label"><b>Name:</b></label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${product.name}">Name</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label"><b>Price:</b></label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="' $' + ${product.price}">Price</p>
-                </div>
-            </div>
-            <input type="number" id="qty" name="qty" class="form-control" placeholder="Quantity" required>
-            <div class="form-group">
-                <label class="col-sm-2 control-label"><b>Unit:</b></label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${product.unit}">Unit</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label"><b>Category:</b></label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${product.category.name}">Category</p>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary" style="color:black;border:1px solid black; padding: 10px 40px 10px 40px;">Add to Cart</button>
-            <div class="form-group">
-                <label class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <img th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_400,w_700/__${product.imageURL}__}">
+            <div class="item-container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="product col-md-3 service-image-left">
+
+                            <center>
+                                <br><br>
+                                <img id="item-display" th:src="@{https://res.cloudinary.com/dta94lqkr/image/upload/c_scale,h_140,w_235/__${product.imageURL}__}" alt=""></img>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h2 class="product-title font-weight-bold" th:text="${product.name}"></h2>
+                        <hr>
+                        <h4 class="product-price font-weight-bold" th:text="'Price: $' + ${product.price}">
+                        </h4>
+                        <h4 class="product-unit font-weight-bold" th:text="'Unit: ' + ${product.unit}">
+                        </h4>
+                        <h4 class="product-category font-weight-bold" th:text="'Category: ' + ${product.category.name}">
+                        </h4>
+                        <hr>
+                        <div class="btn-group wishlist">
+                            <input type="number" id="qty" name="qty" class="form-control" placeholder="Quantity" required>
+                        </div>
+                        <div class="btn-group cart">
+                            <button type="submit" class="btn btn-secondary" style="color:black;border:1px solid black; padding: 10px 40px 10px 40px;">Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
