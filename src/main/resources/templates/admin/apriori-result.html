@@ -32,8 +32,8 @@
                     <td>
                         <a th:href="@{/products/product/__${cartItem.getAssociatedProduct().id}__}"
                            th:text="${cartItem.getAssociatedProduct().name}"></a></td>
-                    <td th:text="${#numbers.formatDecimal(cartItem.occurences/allOrders, 0, 'COMMA', 5, 'POINT')}"></td>
-                    <td th:text="${#numbers.formatDecimal((cartItem.occurences/allOrders)/(cartItemListSize/allOrders), 0, 'COMMA', 5, 'POINT')}"></td>
+                    <td th:text="${#numbers.formatDecimal((cartItem.occurences/allOrders)*100, 0, 'COMMA', 5, 'POINT')} + '%'"></td>
+                    <td th:text="${#numbers.formatDecimal(((cartItem.occurences/allOrders)/(cartItemListSize/allOrders))*100, 0, 'COMMA', 5, 'POINT')}  + '%'"></td>
                     <td th:text="${#numbers.formatDecimal((cartItem.occurences/allOrders)
                                                           /((cartItemListSize/allOrders) * (productsMap.get(cartItem.getAssociatedProduct())/allOrders)), 0, 'COMMA', 5, 'POINT')}"></td>
                 </tr>
